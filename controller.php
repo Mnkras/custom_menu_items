@@ -19,7 +19,7 @@ class Controller extends \Concrete\Core\Package\Package
 
     public function getPackageDescription()
     {
-        return t("Create menu items to any page on your site.");
+        return t("Create menu items for any page on your site.");
     }
 
     public function getPackageName()
