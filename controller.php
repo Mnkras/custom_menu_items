@@ -46,7 +46,7 @@ class Controller extends \Concrete\Core\Package\Package
             $r = $db->Execute('SELECT * FROM pkgCustomMenuItems ORDER BY DisplayOrder');
             while($row = $r->fetchRow())
             {
-                //$menu = new \Concrete\Core\Application\Service\UserInterface\Menu;
+                /** @var $menu \Concrete\Core\Application\Service\UserInterface\Menu **/
                 $menu = \Core::make('helper/concrete/ui/menu');
                 $menu->addPageHeaderMenuItem(
                     'custom_menu_item',
