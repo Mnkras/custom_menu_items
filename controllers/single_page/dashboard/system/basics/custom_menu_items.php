@@ -1,32 +1,35 @@
 <?php
 namespace Concrete\Package\CustomMenuItems\Controller\SinglePage\Dashboard\System\Basics;
+
 use \Concrete\Core\Page\Controller\DashboardPageController;
 
 class CustomMenuItems extends DashboardPageController
 {
     public function view($message = false)
     {
-        if($message)
-        {
+        if ($message) {
             switch($message) {
                 case 'deleted':
                     $this->set('message', t('Menu Item Deleted'));
+                    break;
 
                 case 'added':
                     $this->set('message', t('Menu Item Added'));
+                    break;
 
                 case 'no':
                     $this->set('message', t('Invalid Page'));
+                    break;
 
                 case 'exists':
                     $this->set('message', t('This page is already in the menu!'));
+                    break;
             }
         }
         $db = \Loader::db();
         $r = $db->Execute('SELECT * FROM pkgCustomMenuItems ORDER BY DisplayOrder');
         $cIDs = array();
-        while($row = $r->fetchRow())
-        {
+        while ($row = $r->fetchRow()) {
             $cIDs[] = $row['cID'];
         }
         $this->set('cIDs', $cIDs);
@@ -34,8 +37,7 @@ class CustomMenuItems extends DashboardPageController
 
     public function delete($cID = false, $toke = false)
     {
-        if(!$this->token->validate('delete', $toke))
-        {
+        if (!$this->token->validate('delete', $toke)) {
             $this->redirect('/dashboard/system/basics/custom_menu_items');
         }
         $db = \Loader::db();
@@ -45,19 +47,16 @@ class CustomMenuItems extends DashboardPageController
 
     public function add($cID = false, $toke = false)
     {
-        if(!$this->token->validate('add', $toke))
-        {
+        if (!$this->token->validate('add', $toke)) {
             $this->redirect('/dashboard/system/basics/custom_menu_items');
         }
         $page = \Page::getByID($cID);
-        if(!is_object($page) || $page->isError())
-        {
+        if (!is_object($page) || $page->isError()) {
             $this->redirect('/dashboard/system/basics/custom_menu_items/no');
         }
         $db = \Loader::db();
         $exists = $db->getOne('SELECT cID FROM pkgCustomMenuItems WHERE cID = ?', array($cID));
-        if($exists)
-        {
+        if ($exists) {
             $this->redirect('/dashboard/system/basics/custom_menu_items/exists');
         }
         $order = $db->GetOne('SELECT count(cID) FROM pkgCustomMenuItems');
@@ -67,8 +66,7 @@ class CustomMenuItems extends DashboardPageController
 
     public function reorder()
     {
-        if(!isset($_POST['order']) || !is_array($_POST['order']))
-        {
+        if (!isset($_POST['order']) || !is_array($_POST['order'])) {
             $this->redirect('/dashboard/system/basics/custom_menu_items');
         }
         $order = $this->post('order');
@@ -76,8 +74,10 @@ class CustomMenuItems extends DashboardPageController
         for ($i = 0; $i < $l; $i++) {
             try {
                 $db = \Loader::db();
-                $db->Execute('UPDATE pkgCustomMenuItems SET DisplayOrder=? WHERE cID=?',
-                    array($i, $order[$i]));
+                $db->Execute(
+                    'UPDATE pkgCustomMenuItems SET DisplayOrder=? WHERE cID=?',
+                    array($i, $order[$i])
+                );
             } catch (\Exception $e) {
             }
         }

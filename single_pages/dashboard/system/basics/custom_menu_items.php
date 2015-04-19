@@ -9,7 +9,7 @@ $ps = Core::make('helper/form/page_selector');
         ?>
     </div>
     <div class="col-md-4">
-        <a href="#" class="btn btn-primary" onclick="window.location='<?php echo $this->action('add', '\'+$(\'[name=menu_cID]\').val()+\'', Core::make('helper/validation/token')->generate('add'))?>'"><?php echo t('Add Menu Item')?></a>
+        <a href="#" style="margin-top: 10px;" class="btn btn-primary" onclick="window.location='<?php echo $this->action('add') . '/\'+$(\'[name=menu_cID]\').val()+\'' . '/' . Core::make('helper/validation/token')->generate('add')?>'"><?php echo t('Add Menu Item')?></a>
     </div>
 </div>
 
@@ -17,9 +17,9 @@ $ps = Core::make('helper/form/page_selector');
     <?php if (count($cIDs) > 0) { ?>
         <div class="col-md-8">
             <table class="table table-striped">
-                <?php foreach($cIDs as $cID) {
+                <?php foreach ($cIDs as $cID) {
                     $page = \Page::getByID($cID);
-                    if(is_object($page) && !$page->isError()) {
+                    if (is_object($page) && !$page->isError()) {
                         $name = h(t($page->getCollectionName()));
                     } else {
                         $name = t('Unknown Page');
