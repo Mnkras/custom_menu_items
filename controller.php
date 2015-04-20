@@ -31,8 +31,7 @@ class Controller extends \Concrete\Core\Package\Package
     {
         $pkg = parent::install();
         $sp = \SinglePage::add('/dashboard/system/basics/custom_menu_items', $pkg);
-        if (is_object($sp))
-        {
+        if (is_object($sp)) {
             $sp->update(array('cName'=>t('Custom Menu Items')));
         }
     }
@@ -40,12 +39,10 @@ class Controller extends \Concrete\Core\Package\Package
     public function on_start()
     {
         $u = new \User();
-        if($u->isLoggedIn())
-        {
+        if ($u->isLoggedIn()) {
             $db = \Loader::db();
             $r = $db->Execute('SELECT * FROM pkgCustomMenuItems ORDER BY DisplayOrder');
-            while($row = $r->fetchRow())
-            {
+            while ($row = $r->fetchRow()) {
                 /** @var $menu \Concrete\Core\Application\Service\UserInterface\Menu **/
                 $menu = \Core::make('helper/concrete/ui/menu');
                 $menu->addPageHeaderMenuItem(
