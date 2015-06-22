@@ -1,14 +1,15 @@
 <?php
+
 namespace Concrete\Package\CustomMenuItems\MenuItem\CustomMenuItem;
 
-use HtmlObject\Element;
 use HtmlObject\Link;
 
-class Controller extends \Concrete\Core\Application\UserInterface\Menu\Item\Controller {
-
+class Controller extends \Concrete\Core\Application\UserInterface\Menu\Item\Controller
+{
     public $menuItem;
 
-    public function getMenuItemLinkElement() {
+    public function getMenuItemLinkElement()
+    {
         $a = new Link();
 
         $page = \Page::getByID($this->menuItem->getLink());
@@ -16,7 +17,7 @@ class Controller extends \Concrete\Core\Application\UserInterface\Menu\Item\Cont
         $a->setValue(h(t($page->getCollectionName())));
         $a->href($page->getCollectionLink());
 
-        $a->style('line-height: 14px;padding-top: 16px;width: '.(strlen($page->getCollectionName())*6.5+30).'px;');
+        $a->style('line-height: 14px;padding-top: 16px;width: '.(strlen($page->getCollectionName()) * 6.5 + 30).'px;');
 
         return $a;
     }
@@ -24,15 +25,13 @@ class Controller extends \Concrete\Core\Application\UserInterface\Menu\Item\Cont
     public function displayItem()
     {
         $page = \Page::getByID($this->menuItem->getLink());
-        if(is_object($page) && !$page->isError())
-        {
+        if (is_object($page) && !$page->isError()) {
             $tcp = new \Permissions($page);
-            if ($tcp->canRead())
-            {
+            if ($tcp->canRead()) {
                 return true;
             }
         }
+
         return false;
     }
-
 }

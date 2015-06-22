@@ -1,18 +1,16 @@
 <?php
+
 namespace Concrete\Package\CustomMenuItems;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 /**
- *
  * Custom Menu Items Package.
- * @author Michael Krasnow <mnkras@gmail.com>
  *
+ * @author Michael Krasnow <mnkras@gmail.com>
  */
-
 class Controller extends \Concrete\Core\Package\Package
 {
-
     protected $pkgHandle = 'custom_menu_items';
     protected $appVersionRequired = '5.7.0.4';
     protected $pkgVersion = '0.9';
@@ -32,7 +30,7 @@ class Controller extends \Concrete\Core\Package\Package
         $pkg = parent::install();
         $sp = \SinglePage::add('/dashboard/system/basics/custom_menu_items', $pkg);
         if (is_object($sp)) {
-            $sp->update(array('cName'=>t('Custom Menu Items')));
+            $sp->update(array('cName' => t('Custom Menu Items')));
         }
     }
 
@@ -50,7 +48,7 @@ class Controller extends \Concrete\Core\Package\Package
                     'custom_menu_items',
                     array(
                         'href' => $row['cID'],
-                        'position' => 'left'
+                        'position' => 'left',
                     )
                 );
             }

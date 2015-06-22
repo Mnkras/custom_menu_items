@@ -1,14 +1,15 @@
 <?php
+
 namespace Concrete\Package\CustomMenuItems\Controller\SinglePage\Dashboard\System\Basics;
 
-use \Concrete\Core\Page\Controller\DashboardPageController;
+use Concrete\Core\Page\Controller\DashboardPageController;
 
 class CustomMenuItems extends DashboardPageController
 {
     public function view($message = false)
     {
         if ($message) {
-            switch($message) {
+            switch ($message) {
                 case 'deleted':
                     $this->set('message', t('Menu Item Deleted'));
                     break;
@@ -60,7 +61,7 @@ class CustomMenuItems extends DashboardPageController
             $this->redirect('/dashboard/system/basics/custom_menu_items/exists');
         }
         $order = $db->GetOne('SELECT count(cID) FROM pkgCustomMenuItems');
-        $db->Execute('INSERT into pkgCustomMenuItems (DisplayOrder,cID) VALUES (?,?)', array($order,$cID));
+        $db->Execute('INSERT into pkgCustomMenuItems (DisplayOrder,cID) VALUES (?,?)', array($order, $cID));
         $this->redirect('/dashboard/system/basics/custom_menu_items/added');
     }
 
@@ -71,7 +72,7 @@ class CustomMenuItems extends DashboardPageController
         }
         $order = $this->post('order');
         $l = count($order);
-        for ($i = 0; $i < $l; $i++) {
+        for ($i = 0; $i < $l; ++$i) {
             try {
                 $db = \Loader::db();
                 $db->Execute(
@@ -82,6 +83,5 @@ class CustomMenuItems extends DashboardPageController
             }
         }
         exit;
-
     }
 }

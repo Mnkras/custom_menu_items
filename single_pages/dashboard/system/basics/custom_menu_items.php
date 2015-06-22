@@ -14,24 +14,27 @@ $ps = Core::make('helper/form/page_selector');
 </div>
 
 <div class="row">
-    <?php if (count($cIDs) > 0) { ?>
+    <?php if (count($cIDs) > 0) {
+    ?>
         <div class="col-md-8">
             <table class="table table-striped">
                 <?php foreach ($cIDs as $cID) {
-                    $page = \Page::getByID($cID);
-                    if (is_object($page) && !$page->isError()) {
-                        $name = h(t($page->getCollectionName()));
-                    } else {
-                        $name = t('Unknown Page');
-                    }
-                        ?>
+    $page = \Page::getByID($cID);
+    if (is_object($page) && !$page->isError()) {
+        $name = h(t($page->getCollectionName()));
+    } else {
+        $name = t('Unknown Page');
+    }
+    ?>
                     <tr data-cID="<?php echo $cID?>">
                         <td><a target="_blank" href="<?php echo $page->getCollectionLink()?>"><?php echo $name?></a></td>
                         <td><a class="btn btn-danger" href="<?php echo $this->action('delete', $cID, Core::make('helper/validation/token')->generate('delete'))?>"><?php echo t('Delete')?></a></td>
                         <td style="text-align:right"><i style="cursor: move" class="fa fa-arrows"></i></td>
                     </tr>
                     <?php
-                } ?>
+
+}
+    ?>
             </table>
         </div>
         <script type="text/javascript">
@@ -62,7 +65,10 @@ $ps = Core::make('helper/form/page_selector');
             })(jQuery, window.location);
         </script>
 
-    <?php } else { ?>
+    <?php 
+} else {
+    ?>
         <p><?php echo t("You have not added any menu items.")?></p>
-    <?php } ?>
+    <?php 
+} ?>
 </div>
